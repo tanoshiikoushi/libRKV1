@@ -8,13 +8,13 @@ const u8 RKV1_FILE_NAME_LENGTH = 0x20;
 const u16 RKV1_DIRECTORY_NAME_LENGTH = 0x100;
 
 class RKV1DirectoryEntry {
-    private:
+    public:
         u64 name_offset;
         u32 index;
 };
 
 class RKV1FileEntry {
-    private:
+    public:
         u64 name_offset;
         u32 directory_index;
         u64 file_size;

@@ -1,8 +1,9 @@
 #include "RKV1.h"
+#include "rw_utilities/mem_read_utilities.h"
 #include <stdio.h>
 #include <cstring>
 
-bool RKV1File::load(const u8* rkv_buf, const u64 buf_size) {
+bool RKV1File::load(const u8* buf_to_copy, const u64 buf_size) {
     // copy data into our buffer
     this->data = new u8[buf_size];
     this->data_size = buf_size;
@@ -12,8 +13,8 @@ bool RKV1File::load(const u8* rkv_buf, const u64 buf_size) {
     // we don't really have a way to verify the header, so we're just gonna start loading and hope for the best lol
     // set our current location to the variable which holds the directory count
     u64 current_location = this->data_size - 0x4;
-    this->directory_count = read_32LE(this->data[current_location]);
-    this->file_count = read_32LE(this->data[current_location]);
+    this->directory_count = read_32LE(&this->data[current_location]);
+    this->file_count = read_32LE(&this->data[current_location]);
 
     if (this->directory_count == 0 || this->file_count == 0) {
         printf("Invalid directory or file counts: %d directories detected, %d files detected\n", this->directory_count, this->file_count);
@@ -30,7 +31,7 @@ bool RKV1File::load(const u8* rkv_buf, const u64 buf_size) {
         current_location -= RKV1_DIRECTORY_NAME_LENGTH;
         this->directory_entries[current_dir].index = current_dir;
         this->directory_entries[current_dir].name_offset = current_location;
-        printf("Directory %d: %s\n", this->directory_entries[current_dir].index, this->data[this->directory_entries[current_dir].name_offset]);
+        printf("Directory %d: %s\n", this->directory_entries[current_dir].index, &this->data[this->directory_entries[current_dir].name_offset]);
     }
 
     return true;
