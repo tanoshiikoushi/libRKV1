@@ -45,7 +45,7 @@ bool RKV1File::load(const u8* buf_to_copy, const u64 buf_size) {
         this->file_entries[f].data_pointer = read_32LE(&this->data[current_location + RKV1_FILE_NAME_LENGTH + 0xC]);
         this->file_entries[f].checksum = read_32LE(&this->data[current_location + RKV1_FILE_NAME_LENGTH + 0x10]);
         this->file_entries[f].timestamp = read_32LE(&this->data[current_location + RKV1_FILE_NAME_LENGTH + 0x14]);
-        this->file_entries[f].uid = read_32LE(&this->data[current_location + RKV1_FILE_NAME_LENGTH + 0x18]);
+        this->file_entries[f].uid = read_32BE(&this->data[current_location + RKV1_FILE_NAME_LENGTH + 0x18]);
         printf("File ID: 0x%.4X - Checksum: 0x%.4X - Name: %s\n", this->file_entries[f].uid, this->file_entries[f].checksum,
                 &this->data[this->file_entries[f].name_offset]);
     }
