@@ -5,6 +5,7 @@
 #define RKV1_H_INCLUDED
 
 const u8 RKV1_FILE_NAME_LENGTH = 0x20;
+const u16 RKV1_FILE_ENTRY_SIZE = 0x40;
 const u16 RKV1_DIRECTORY_NAME_LENGTH = 0x100;
 
 class RKV1DirectoryEntry {
